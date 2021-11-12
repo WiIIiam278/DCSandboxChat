@@ -11,6 +11,7 @@ import java.util.StringJoiner;
 
 public class ReplyCommand implements CommandExecutor {
 
+    private static final DCSandboxChat plugin = DCSandboxChat.getInstance();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -30,10 +31,7 @@ public class ReplyCommand implements CommandExecutor {
                     for (String messageItem : args) {
                         message.add(messageItem);
                     }
-                    targetPlayer.sendMessage("[" + player.getDisplayName() + ChatColor.GRAY + "→" + ChatColor.GRAY + "You] " + ChatColor.GRAY + message);
-                    player.sendMessage("[You" + ChatColor.GRAY + "→" + ChatColor.GRAY + targetPlayer.getDisplayName() + "] " + ChatColor.GRAY + message);
-                    MsgCommand.conversations.put(player.getUniqueId(), targetPlayer.getUniqueId());
-                    MsgCommand.conversations.put(targetPlayer.getUniqueId(), player.getUniqueId());
+                    MsgCommand.sendPrivateMessage(player, targetPlayer, message);
                 } else {
                     player.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.RED + "You have nobody to reply to!");
                 }

@@ -13,6 +13,9 @@ import java.util.UUID;
 
 public class MsgCommand implements CommandExecutor {
 
+    private static final DCSandboxChat plugin = DCSandboxChat.getInstance();
+
+    // Map of conversations for reply feature
     public static HashMap<UUID,UUID> conversations = new HashMap<>();
 
     @Override
@@ -35,10 +38,7 @@ public class MsgCommand implements CommandExecutor {
                         player.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.RED + "You can't message yourself!");
                         return true;
                     }
-                    targetPlayer.sendMessage("[" + player.getDisplayName() + ChatColor.GRAY + "→" + ChatColor.GRAY + "You] " + ChatColor.GRAY + message);
-                    player.sendMessage("[You"+ ChatColor.GRAY + "→" + ChatColor.GRAY + targetPlayer.getDisplayName() + "] " + ChatColor.GRAY + message);
-                    conversations.put(player.getUniqueId(), targetPlayer.getUniqueId());
-                    conversations.put(targetPlayer.getUniqueId(), player.getUniqueId());
+                    sendPrivateMessage(player, targetPlayer, message);
                 } else {
                     player.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.RED + "Invalid player.");
                 }
@@ -48,5 +48,14 @@ public class MsgCommand implements CommandExecutor {
             return true;
         }
         return false;
+    }
+
+    // Dispatch a private message
+    public static void sendPrivateMessage(Player player, Player targetPlayer, StringJoiner message) {
+        targetPlayer.sendMessage("[" + player.getDisplayName() + ChatColor.GRAY + "→" + ChatColor.GRAY + "You] " + ChatColor.GRAY + message);
+        player.sendMessage("[You"+ ChatColor.GRAY + "→" + ChatColor.GRAY + targetPlayer.getDisplayName() + "] " + ChatColor.GRAY + message);
+        plugin.getLogger().info(player.getDisplayName() + " → " + targetPlayer.getDisplayName() + ": " + message);
+        conversations.put(player.getUniqueId(), targetPlayer.getUniqueId());
+        conversations.put(targetPlayer.getUniqueId(), player.getUniqueId());
     }
 }
