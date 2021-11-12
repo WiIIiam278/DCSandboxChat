@@ -40,6 +40,7 @@ public class ReplyCommand implements CommandExecutor {
             } else {
                 player.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.RED + "Invalid syntax. Usage: " + command.getUsage());
             }
+            return true;
         }
         return false;
     }
