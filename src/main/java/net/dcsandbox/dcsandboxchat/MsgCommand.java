@@ -31,8 +31,12 @@ public class MsgCommand implements CommandExecutor {
                     message.add(messageItem);
                 }
                 if (targetPlayer != null) {
-                    targetPlayer.sendMessage("[" + player.getDisplayName() + "→You] " + ChatColor.GRAY + message);
-                    player.sendMessage("[You→" + targetPlayer.getDisplayName() + "] " + ChatColor.GRAY + message);
+                    if (targetPlayer.getUniqueId().equals(player.getUniqueId())) {
+                        player.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.RED + "You can't message yourself!");
+                        return true;
+                    }
+                    targetPlayer.sendMessage("[" + player.getDisplayName() + ChatColor.GRAY + "→" + ChatColor.GRAY + "You] " + ChatColor.GRAY + message);
+                    player.sendMessage("[You"+ ChatColor.GRAY + "→" + ChatColor.GRAY + targetPlayer.getDisplayName() + "] " + ChatColor.GRAY + message);
                     conversations.put(player.getUniqueId(), targetPlayer.getUniqueId());
                     conversations.put(targetPlayer.getUniqueId(), player.getUniqueId());
                 } else {

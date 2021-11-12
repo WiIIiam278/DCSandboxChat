@@ -22,12 +22,16 @@ public class ReplyCommand implements CommandExecutor {
                         player.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.RED + "That player is no longer online.");
                         return true;
                     }
+                    if (targetPlayer.getUniqueId().equals(player.getUniqueId())) {
+                        player.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.RED + "You can't reply to yourself!");
+                        return true;
+                    }
                     StringJoiner message = new StringJoiner(" ");
                     for (String messageItem : args) {
                         message.add(messageItem);
                     }
-                    targetPlayer.sendMessage("[" + player.getDisplayName() + "→You] " + ChatColor.GRAY + message);
-                    player.sendMessage("[You→" + targetPlayer.getDisplayName() + "] " + ChatColor.GRAY + message);
+                    targetPlayer.sendMessage("[" + player.getDisplayName() + ChatColor.GRAY + "→" + ChatColor.GRAY + "You] " + ChatColor.GRAY + message);
+                    player.sendMessage("[You" + ChatColor.GRAY + "→" + ChatColor.GRAY + targetPlayer.getDisplayName() + "] " + ChatColor.GRAY + message);
                     MsgCommand.conversations.put(player.getUniqueId(), targetPlayer.getUniqueId());
                     MsgCommand.conversations.put(targetPlayer.getUniqueId(), player.getUniqueId());
                 } else {
