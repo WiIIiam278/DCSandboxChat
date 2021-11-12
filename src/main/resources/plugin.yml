@@ -1,0 +1,23 @@
+name: DCSandboxChat
+version: '${project.version}'
+main: net.dcsandbox.dcsandboxchat.DCSandboxChat
+api-version: 1.17
+author: William278
+description: Chat plugin for the Dogcraft Sandbox
+commands:
+  msg:
+    usage: /msg <player> <message>
+    description: Privately message a player
+    aliases:
+      - m
+      - whisper
+      - message
+      - w
+      - pm
+      - tell
+      - t
+  reply:
+    usage: /reply <message>
+    description: Quickly reply to a private message
+    aliases:
+      - r
