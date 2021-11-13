@@ -1,5 +1,6 @@
 package net.dcsandbox.dcsandboxchat;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +14,6 @@ public class ChatListener implements Listener {
     public void onPlayerChat(AsyncPlayerChatEvent e) {
         e.setCancelled(true);
         plugin.getLogger().info(e.getPlayer().getDisplayName() + ": " + e.getMessage());
-        e.getPlayer().sendMessage(e.getPlayer().getDisplayName() + ": " + ChatColor.GRAY +  e.getMessage());
+        Bukkit.broadcastMessage(e.getPlayer().getDisplayName() + ": " + ChatColor.GRAY + e.getMessage());
     }
 }
